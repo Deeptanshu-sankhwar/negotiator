@@ -2,4 +2,3 @@
 .env
 node_modules
 negotiator/static/web-components
-requirements.txt
