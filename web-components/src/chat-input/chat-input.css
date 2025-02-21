@@ -1,0 +1,13 @@
+chat-input form {
+    padding: 0 .5rem;
+    display: flex;
+    gap: .5rem;
+}
+
+chat-input input {
+    flex: 1;
+    font-size: 1rem;
+    padding: .5rem .7rem;
+    border-radius: 1rem;
+    border: 1px solid var(--border-color);
+}

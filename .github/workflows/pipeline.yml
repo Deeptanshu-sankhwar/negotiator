@@ -1,0 +1,36 @@
+name: pipeline
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:14.5
+        env:
+          POSTGRES_USER: postgresql
+          POSTGRES_PASSWORD: postgresql
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - uses: actions/checkout@v4
+      - name: install uv
+        uses: astral-sh/setup-uv@v5
+      - name: install dependencies
+        run: |
+          make install
+      - name: create test database
+        env:
+          PGPASSWORD: postgresql
+          DATABASE_URL: 'postgresql://localhost:5432/negotiator_test?user=negotiator&password=negotiator'
+        run: |
+          psql --host localhost --username postgresql < databases/drop_and_create_databases.sql
+          make migrate migrate-test
+      - name: run tests
+        run: |
+          make web-components/build
+          make test

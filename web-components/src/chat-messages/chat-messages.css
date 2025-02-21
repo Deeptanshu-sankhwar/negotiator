@@ -1,0 +1,83 @@
+chat-messages {
+    height: calc(100vh - 8rem);
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    overflow-y: scroll;
+}
+
+chat-messages .message {
+    --chat-color: var(--main-bubble-background);
+    padding: .5rem .7rem;
+    margin-left: auto;
+
+    max-width: 66%;
+    border-radius: 1rem;
+
+    position: relative;
+
+    background-color: var(--chat-color);
+    color: white;
+    cursor: pointer;
+}
+
+chat-messages .message:before {
+    display: block;
+    content: '';
+    position: absolute;
+    bottom: -.1rem;
+    right: 0;
+    width: 0;
+    height: 0;
+
+    border: .35rem solid transparent;
+    border-top-width: .5rem;
+    border-bottom-width: .5rem;
+    border-top-color: var(--chat-color);
+    border-right-color: var(--chat-color);
+}
+
+chat-messages .message:hover:after {
+    display: block;
+    content: 'click to reset';
+    position: absolute;
+    bottom: -.8rem;
+    right: 0;
+
+    color: var(--chat-color);
+    font-size: .6rem;
+    width: 4rem;
+    text-align: right;
+}
+
+chat-messages .message.assistant:hover:after {
+    right: initial;
+    left: 0;
+    text-align: left;
+}
+
+chat-messages .message.assistant {
+    --chat-color: var(--secondary-bubble-background);
+    margin-left: 0;
+}
+
+chat-messages .message.assistant:before {
+    left: 0;
+
+    border-left-color: var(--chat-color);
+    border-right-color: transparent;
+}
+
+chat-messages .message.pending {
+    height: 2rem;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+}
+
+chat-messages .message.pending:before {
+    display: none;
+}
